@@ -7,8 +7,7 @@ namespace RefugiQuatrePotes.Models;
 [Index(nameof(Xip), IsUnique = true)]
 public class Animal
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
-    public int ID { get; set; }
+    public int AnimalID { get; set; }
     [MaxLength(50), Required] 
     public string Nom { get; set; }
     [Required]

@@ -7,8 +7,7 @@ namespace RefugiQuatrePotes.Models;
 [Index(nameof(Codi), IsUnique = true)]
 public class Xip
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
-    public int ID { get; set; }
+    public int XipID { get; set; }
     [Required, StringLength(15, MinimumLength = 15)]
     public string Codi { get; set; }
     [Required]

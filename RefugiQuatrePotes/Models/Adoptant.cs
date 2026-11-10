@@ -7,8 +7,7 @@ namespace RefugiQuatrePotes.Models;
 [Index(nameof(DNI), IsUnique = true)]
 public class Adoptant
 {
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity), Required]
-    public int ID { get; set; }
+    public int AdoptantID { get; set; }
     [MaxLength(9), Required]
     public string DNI { get; set; }
     [MaxLength(50), Required]
