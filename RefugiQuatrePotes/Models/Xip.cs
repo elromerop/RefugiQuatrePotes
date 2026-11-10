@@ -26,6 +26,7 @@ public class Xip
         Codi = codi;
         DataImplantacio = DateTime.Now;
     }
+    public Xip(){}
 
     public override string ToString() => 
         $"Xip (" +

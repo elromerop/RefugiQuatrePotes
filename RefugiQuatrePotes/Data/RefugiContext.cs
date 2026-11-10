@@ -9,6 +9,7 @@ public class RefugiContext : DbContext
     
     public DbSet<Animal> Animal { get; set; }
     public DbSet<Xip> Xip { get; set; }
+    public DbSet<Adoptant> Adoptant { get; set; }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured) optionsBuilder.UseSqlite("Data Source=refugi.db").UseLazyLoadingProxies();
@@ -22,5 +23,15 @@ public class RefugiContext : DbContext
             .HasForeignKey<Animal>("XipID")
             .IsRequired()
             .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Animal>()
+            .HasOne(an => an.Adoptant)
+            .WithMany(ad => ad.Animals)
+            .HasForeignKey("AdoptantID")
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Animal>()
+            .Property(a => a.Especie)
+            .HasConversion<string>();
     }
 }

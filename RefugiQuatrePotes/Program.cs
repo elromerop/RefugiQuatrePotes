@@ -11,6 +11,7 @@ internal class Program
         using (var ctx = new RefugiContext())
         {
             var animalService = new AnimalService(ctx);
+            var adoptantService = new AdoptantService(ctx);
             
             ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
@@ -104,6 +105,10 @@ internal class Program
                 0.8, false,
                 null, 0,
                 new Xip("900000000000009", new DateTime(2025, 1, 8))));
+
+            ctx.Adoptant.Add(new Adoptant("12345678A", "Lucas", "Romero Pérez", true));
+            ctx.Adoptant.Add(new Adoptant("87654321Z", "Jaime", "Jimenez", false));
+            
             
             ctx.SaveChanges();
             
@@ -150,6 +155,36 @@ internal class Program
             {
                 Console.WriteLine(animal);
             }
+            
+            Console.WriteLine("===| Adoptar |===");
+            adoptantService.Adoptar("12345678A", "fdghdfyhrgfh");
+            adoptantService.Adoptar("sdfsdfdfgdfg", "900000000000007");
+            adoptantService.Adoptar("87654321Z", "900000000000001");
+            adoptantService.Adoptar("12345678A", "900000000000007");
+            adoptantService.Adoptar("12345678A", "900000000000008");
+            adoptantService.Adoptar("12345678A", "900000000000009");
+            adoptantService.Adoptar("12345678A", "900000000000003");
+            adoptantService.Adoptar("12345678A", "900000000000004");
+            Console.WriteLine("");
+            
+            Console.WriteLine("===| Retornar |===");
+            adoptantService.Retornar("sdjlfhsdkjfh");
+            adoptantService.Retornar("900000000000004");
+            adoptantService.Retornar("900000000000003");
+            Console.WriteLine("===| Animals de Lucas |===");
+            foreach (var animal in ctx.Adoptant.FirstOrDefault(a => a.DNI == "12345678A").Animals)
+            {
+                Console.WriteLine(animal);
+            }
+            Console.WriteLine("===| Animal Retornat |===");
+            Console.WriteLine(ctx.Animal.FirstOrDefault(a => a.Xip.Codi == "900000000000003"));
+            Console.WriteLine("");
+            Console.WriteLine("===| Llistat adoptants |===");
+            Console.WriteLine("===| (Min '0') |===");
+            adoptantService.LlistatAdoptants(0);
+            Console.WriteLine("===| (Min '2') |===");
+            adoptantService.LlistatAdoptants(2);
+            Console.WriteLine("");
         }
     }
 }

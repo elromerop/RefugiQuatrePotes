@@ -27,6 +27,7 @@ public class Animal
     public decimal QuotaAdopcio { get; set; }
     [Required]
     public virtual Xip Xip { get; set; }
+    public virtual Adoptant? Adoptant { get; set; }
 
     public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, DateTime dataEntrada, double pes, bool estaAdoptat, DateTime? dataAdopcio, decimal quotaAdopcio, Xip xip)
     {
@@ -55,6 +56,8 @@ public class Animal
         QuotaAdopcio = 0;
         Xip = null;
     }
+    
+    public Animal(){}
 
     public override string ToString() =>
         $"Animal (" +
