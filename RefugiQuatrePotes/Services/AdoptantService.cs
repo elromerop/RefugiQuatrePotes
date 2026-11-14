@@ -50,6 +50,11 @@ public class AdoptantService
         animal.Adoptant = adoptant;
         animal.EstaAdoptat = true;
         animal.DataAdopcio = DateTime.Now;
+
+        foreach (var voluntari in animal.Voluntaris)
+        {
+            voluntari.Animals.Remove(animal);
+        }
         
         _context.SaveChanges();
         

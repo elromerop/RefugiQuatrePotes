@@ -12,11 +12,12 @@ internal class Program
         {
             var animalService = new AnimalService(ctx);
             var adoptantService = new AdoptantService(ctx);
+            var voluntariService = new VoluntariService(ctx);
             
             ctx.Database.EnsureDeleted();
             ctx.Database.EnsureCreated();
-            
-            ctx.Animal.Add(new Animal(
+
+            var max = new Animal(
                 "Max",
                 Especie.GOS,
                 false,
@@ -24,9 +25,10 @@ internal class Program
                 new DateTime(2024, 1, 10),
                 24.5, false,
                 null, 0,
-                new Xip("900000000000001", new DateTime(2024, 1, 10))));
+                new Xip("900000000000001", new DateTime(2024, 1, 10)));
+            ctx.Animal.Add(max);
 
-            ctx.Animal.Add(new Animal(
+            var luna = new Animal(
                 "Luna",
                 Especie.GOS,
                 true,
@@ -34,9 +36,10 @@ internal class Program
                 new DateTime(2023, 5, 18),
                 18.2, false,
                 null, 0,
-                new Xip("900000000000002", new DateTime(2023, 5, 18))));
+                new Xip("900000000000002", new DateTime(2023, 5, 18)));
+            ctx.Animal.Add(luna);
 
-            ctx.Animal.Add(new Animal(
+            var rocky = new Animal(
                 "Rocky",
                 Especie.GOS,
                 false,
@@ -44,9 +47,11 @@ internal class Program
                 new DateTime(2025, 2, 14),
                 30.0, false,
                 null, 0,
-                new Xip("900000000000003", new DateTime(2025, 2, 14))));
+                new Xip("900000000000003", new DateTime(2025, 2, 14)));
+            ctx.Animal.Add(rocky);
+            
 
-            ctx.Animal.Add(new Animal(
+            var nala = new Animal(
                 "Nala",
                 Especie.GOS,
                 true,
@@ -54,9 +59,10 @@ internal class Program
                 new DateTime(2024, 9, 2),
                 12.8, false,
                 null, 0,
-                new Xip("900000000000004", new DateTime(2024, 9, 2))));
+                new Xip("900000000000004", new DateTime(2024, 9, 2)));
+            ctx.Animal.Add(nala);
             
-            ctx.Animal.Add(new Animal(
+            var mimi = new Animal(
                 "Mimi",
                 Especie.GAT,
                 true,
@@ -64,9 +70,10 @@ internal class Program
                 new DateTime(2024, 4, 20),
                 3.5, false,
                 null, 0,
-                new Xip("900000000000005", new DateTime(2024, 4, 20))));
+                new Xip("900000000000005", new DateTime(2024, 4, 20)));
+            ctx.Animal.Add(mimi);
 
-            ctx.Animal.Add(new Animal(
+            var simba = new Animal(
                 "Simba",
                 Especie.GAT,
                 false,
@@ -74,9 +81,10 @@ internal class Program
                 new DateTime(2023, 11, 7),
                 5.2, false,
                 null, 0,
-                new Xip("900000000000006", new DateTime(2023, 11, 7))));
+                new Xip("900000000000006", new DateTime(2023, 11, 7)));
+            ctx.Animal.Add(simba);
 
-            ctx.Animal.Add(new Animal(
+            var nina = new Animal(
                 "Nina",
                 Especie.GAT,
                 true,
@@ -84,9 +92,10 @@ internal class Program
                 new DateTime(2025, 6, 25),
                 2.8, true,
                 new DateTime(2026, 3, 2), 0,
-                new Xip("900000000000007", new DateTime(2025, 6, 25))));
+                new Xip("900000000000007", new DateTime(2025, 6, 25)));
+            ctx.Animal.Add(nina);
             
-            ctx.Animal.Add(new Animal(
+            var bunny = new Animal(
                 "Bunny",
                 Especie.CONILL,
                 false,
@@ -94,9 +103,10 @@ internal class Program
                 new DateTime(2024, 7, 13),
                 2.1, false,
                 null, 0,
-                new Xip("900000000000008", new DateTime(2024, 7, 13))));
+                new Xip("900000000000008", new DateTime(2024, 7, 13)));
+            ctx.Animal.Add(bunny);
             
-            ctx.Animal.Add(new Animal(
+            var pioli = new Animal(
                 "Piolí",
                 Especie.AU,
                 true,
@@ -104,15 +114,31 @@ internal class Program
                 new DateTime(2025, 1, 8),
                 0.8, false,
                 null, 0,
-                new Xip("900000000000009", new DateTime(2025, 1, 8))));
+                new Xip("900000000000009", new DateTime(2025, 1, 8)));
+            ctx.Animal.Add(pioli);
 
-            ctx.Adoptant.Add(new Adoptant("12345678A", "Lucas", "Romero Pérez", true));
-            ctx.Adoptant.Add(new Adoptant("87654321Z", "Jaime", "Jimenez", false));
+            var lucas = new Adoptant("12345678A", "Lucas", "Romero Pérez", true);
+            ctx.Adoptant.Add(lucas);
+
+            var jaime = new Adoptant("87654321Z", "Jaime", "Jimenez", false);
+            ctx.Adoptant.Add(jaime);
+            
+            var kurapika = new Adoptant("19283746F", "Kurapika", "Kurta", true);
+            ctx.Adoptant.Add(kurapika);
+
+            var aina = new Voluntari("Aina", Torn.MATI);
+            ctx.Voluntari.Add(aina);
+            
+            var joan = new Voluntari("Joan", Torn.TARDA);
+            ctx.Voluntari.Add(joan);
+            
+            var nuria = new Voluntari("Núria", Torn.CAP_DE_SETMANA);
+            ctx.Voluntari.Add(nuria);
             
             
             ctx.SaveChanges();
             
-            Console.WriteLine("===| Dades Inserides |===");
+            Console.WriteLine("===| Animals Inserits |===");
             var llista = ctx.Animal.ToList();
             foreach (var animal in llista)
             {
@@ -172,12 +198,12 @@ internal class Program
             adoptantService.Retornar("900000000000004");
             adoptantService.Retornar("900000000000003");
             Console.WriteLine("===| Animals de Lucas |===");
-            foreach (var animal in ctx.Adoptant.FirstOrDefault(a => a.DNI == "12345678A").Animals)
+            foreach (var animal in lucas.Animals)
             {
                 Console.WriteLine(animal);
             }
             Console.WriteLine("===| Animal Retornat |===");
-            Console.WriteLine(ctx.Animal.FirstOrDefault(a => a.Xip.Codi == "900000000000003"));
+            Console.WriteLine(rocky);
             Console.WriteLine("");
             Console.WriteLine("===| Llistat adoptants |===");
             Console.WriteLine("===| (Min '0') |===");
@@ -185,6 +211,46 @@ internal class Program
             Console.WriteLine("===| (Min '2') |===");
             adoptantService.LlistatAdoptants(2);
             Console.WriteLine("");
+            Console.WriteLine("===| Assignar Animals a Voluntaris |===");
+            voluntariService.AssignarAnimal("jsdhfhdsjh", "fsjhdhjd");
+            voluntariService.AssignarAnimal("Aina", "fsjhdhjd");
+            voluntariService.AssignarAnimal("Aina", "900000000000007");
+            voluntariService.AssignarAnimal("Aina", "900000000000001");
+            voluntariService.AssignarAnimal("Aina", "900000000000001");
+            voluntariService.AssignarAnimal("Aina", "900000000000002");
+            voluntariService.AssignarAnimal("Aina", "900000000000003");
+            voluntariService.AssignarAnimal("Aina", "900000000000004");
+            voluntariService.AssignarAnimal("Aina", "900000000000005");
+            voluntariService.AssignarAnimal("Joan", "900000000000005");
+            Console.WriteLine("");
+            Console.WriteLine("===| Desassignar Animals dels Voluntaris |===");
+            voluntariService.DesassignarAnimal("jsdhfhdsjh", "fsjhdhjd");
+            voluntariService.DesassignarAnimal("Aina", "fsjhdhjd");
+            voluntariService.DesassignarAnimal("Aina", "900000000000005");
+            voluntariService.DesassignarAnimal("Aina", "900000000000004");
+            Console.WriteLine("===| Voluntaris de Rocky |===");
+            foreach (var voluntari in rocky.Voluntaris)
+            {
+                Console.WriteLine(voluntari);
+            }
+            adoptantService.Adoptar("19283746F", "900000000000003");
+            Console.WriteLine("===| Voluntaris de Rocky |===");
+            foreach (var voluntari in rocky.Voluntaris)
+            {
+                Console.WriteLine(voluntari);
+            }
+            Console.WriteLine("");
+            
+            Console.WriteLine("===| Passejar |===");
+            voluntariService.RegistrarPasseig("sdfsdf", "sfsdffsd", 10);
+            voluntariService.RegistrarPasseig("Aina", "sdfdssd", 10);
+            voluntariService.RegistrarPasseig("Joan", "900000000000007", 10);
+            voluntariService.RegistrarPasseig("Joan", "900000000000005", 10);
+            Console.WriteLine("Minuts Passeig d'Aina: "+aina.MinutsPasseig);
+            voluntariService.RegistrarPasseig("Aina", "900000000000001", 10);
+            Console.WriteLine("Minuts Passeig d'Aina: "+aina.MinutsPasseig);
+            voluntariService.RegistrarPasseig("Aina", "900000000000001", 10);
+            Console.WriteLine("Minuts Passeig d'Aina: "+aina.MinutsPasseig);
         }
     }
 }
