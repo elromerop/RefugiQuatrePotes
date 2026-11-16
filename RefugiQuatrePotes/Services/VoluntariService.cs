@@ -11,6 +11,11 @@ public class VoluntariService
     {
         _context = context;
     }
+    
+    public List<Voluntari> GetTots()
+    {
+        return _context.Voluntari.ToList();
+    }
 
     public bool AssignarAnimal(string nomVoluntari, string codiXip)
     {

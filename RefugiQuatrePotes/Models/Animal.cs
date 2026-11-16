@@ -28,6 +28,8 @@ public class Animal
     public virtual Xip Xip { get; set; }
     public virtual Adoptant? Adoptant { get; set; }
     public virtual ICollection<Voluntari> Voluntaris { get; set; }
+    public virtual Animal? Mare { get; set; }
+    public virtual ICollection<Animal> Cries { get; set; }
 
     public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, DateTime dataEntrada, double pes, bool estaAdoptat, DateTime? dataAdopcio, decimal quotaAdopcio, Xip xip)
     {
@@ -42,6 +44,7 @@ public class Animal
         QuotaAdopcio = quotaAdopcio;
         Xip = xip;
         Voluntaris = new HashSet<Voluntari>();
+        Cries = new HashSet<Animal>();
     }
 
     public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, double pes)
@@ -57,9 +60,14 @@ public class Animal
         QuotaAdopcio = 0;
         Xip = null;
         Voluntaris = new HashSet<Voluntari>();
+        Cries = new HashSet<Animal>();
     }
-    
-    public Animal(){}
+
+    public Animal()
+    {
+        Voluntaris = new HashSet<Voluntari>();
+        Cries = new HashSet<Animal>();
+    }
 
     public override string ToString() =>
         $"Animal (" +

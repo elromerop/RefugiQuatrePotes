@@ -29,8 +29,11 @@ public class Voluntari
         MinutsPasseig = 0;
         Animals = new HashSet<Animal>();
     }
-    
-    public Voluntari() {}
+
+    public Voluntari()
+    {
+        Animals = new HashSet<Animal>();
+    }
     
     public override string ToString() => 
         $"Voluntari (" +

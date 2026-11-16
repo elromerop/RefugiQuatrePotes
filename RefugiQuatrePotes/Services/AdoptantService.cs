@@ -11,6 +11,11 @@ public class AdoptantService
     {
         _context = context;
     }
+    
+    public List<Adoptant> GetTots()
+    {
+        return _context.Adoptant.ToList();
+    }
 
     public bool Adoptar(string dni, string codiXip)
     {

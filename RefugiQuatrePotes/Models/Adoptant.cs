@@ -39,8 +39,11 @@ public class Adoptant
         DataRegistre = DateTime.Now;
         Animals = new HashSet<Animal>();
     }
-    
-    public Adoptant(){}
+
+    public Adoptant()
+    {
+        Animals = new HashSet<Animal>();
+    }
     
     public override string ToString() =>
         $"Adoptant (" +
