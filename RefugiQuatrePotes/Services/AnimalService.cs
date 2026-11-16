@@ -160,7 +160,12 @@ public class AnimalService
             Console.WriteLine($"[NO TROBAT] xip '{codiXip}' no trobat");
             return new List<Animal>();
         }
-        
+
+        return Descendents(animal);
+    }
+
+    private List<Animal> Descendents(Animal animal)
+    {
         HashSet<Animal> descendents = new();
 
         foreach (var cria in animal.Cries)
@@ -168,7 +173,7 @@ public class AnimalService
             if (descendents.Contains(cria)) continue;
             
             descendents.Add(cria);
-            var descendentsCria = Descendents(cria.Xip.Codi);
+            var descendentsCria = Descendents(cria);
             if (descendentsCria != null && descendentsCria.Count > 0)
             {
                 foreach (var a in descendentsCria) descendents.Add(a);
