@@ -405,7 +405,7 @@ MostrarDescendents("724098100000999");     // no existeix: missatge i []
 Console.WriteLine("\n--- Esborrar una mare ---");
 try
 {
-    db.Animal.Remove(coco);
+    //db.Animal.Remove(coco);
     db.SaveChanges();
     Console.WriteLine("S'ha esborrat la Coco (no hauria!)");
 }
@@ -415,3 +415,17 @@ catch (Exception e)     // segons el cas, EF llança InvalidOperationException o
     db.ChangeTracker.Clear();   // si no, l'esborrat continua pendent i el següent SaveChanges tornaria a petar
 }
 Console.WriteLine($"Animals a la BD: {db.Animal.Count()} (el Rocky, la Bimba i el Toby hi continuen)");
+// ================================================================
+// ============ SESSIÓ 5 · DESPESES ===============================
+// ================================================================
+
+// ============ Nivell 1/3 · Calcular despeses ============
+Console.WriteLine("\n--- Despeses mes 1 ---");
+animalService.CalcularDespesaMes();
+Console.WriteLine("\n--- Despeses mes 2 ---");
+animalService.CalcularDespesaMes();
+Console.WriteLine("\n--- Despeses mes 3 ---");
+db.Adoptant.Add(new Adoptant("10293847A", "Lucas", "Romero Pérez", true));
+db.SaveChanges();
+adoptantService.Adoptar("10293847A", "724098100000012");
+animalService.CalcularDespesaMes();

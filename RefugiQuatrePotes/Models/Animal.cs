@@ -24,6 +24,8 @@ public class Animal
     public DateTime? DataAdopcio { get; set; }
     [Precision(8, 2)]
     public decimal QuotaAdopcio { get; set; }
+    [Precision(8, 2)]
+    public decimal DespesaAcumulada { get; set; }
     [Required]
     public virtual Xip Xip { get; set; }
     public virtual Adoptant? Adoptant { get; set; }
@@ -31,7 +33,7 @@ public class Animal
     public virtual Animal? Mare { get; set; }
     public virtual ICollection<Animal> Cries { get; set; }
 
-    public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, DateTime dataEntrada, double pes, bool estaAdoptat, DateTime? dataAdopcio, decimal quotaAdopcio, Xip xip)
+    public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, DateTime dataEntrada, double pes, bool estaAdoptat, DateTime? dataAdopcio, decimal quotaAdopcio, decimal despesaAcumulada, Xip xip)
     {
         Nom = nom;
         Especie = especie;
@@ -42,6 +44,7 @@ public class Animal
         EstaAdoptat = estaAdoptat;
         DataAdopcio = dataAdopcio;
         QuotaAdopcio = quotaAdopcio;
+        DespesaAcumulada = despesaAcumulada;
         Xip = xip;
         Voluntaris = new HashSet<Voluntari>();
         Cries = new HashSet<Animal>();
@@ -58,6 +61,7 @@ public class Animal
         EstaAdoptat = false;
         DataAdopcio = null;
         QuotaAdopcio = 0;
+        DespesaAcumulada = 0;
         Xip = null;
         Voluntaris = new HashSet<Voluntari>();
         Cries = new HashSet<Animal>();

@@ -182,4 +182,61 @@ public class AnimalService
 
         return descendents.ToList();
     }
+
+    public void CalcularDespesaMes()
+    {
+        float despesaTotal = 0f;
+        Animal animalMesCar = null;
+        float despesaMajor = 0f;
+        
+        foreach (var animal in _context.Animal)
+        {
+            var previa = animal.DespesaAcumulada;
+
+            float despesaMes = 0f;
+
+            switch (animal.Especie)
+            {
+                case Especie.GOS: despesaMes = 60f; break;
+                case Especie.GAT: despesaMes = 40f; break;
+                case Especie.CONILL: despesaMes = 15f; break;
+                case Especie.AU: despesaMes = 10f; break;
+                case Especie.ALTRES: despesaMes = 20f; break;
+            }
+
+            if (animal.Voluntaris.Count > 0) despesaMes *= 0.90f;
+
+            if (DateTime.Today.Year - animal.DataNaixement.Year >= 8) despesaMes *= 1.3f;
+
+            float count = 0;
+            foreach (var cria in animal.Cries)
+                if (!cria.EstaAdoptat)
+                    count++;
+
+            if (count > 0) despesaMes *= (1f+(count / 10));
+
+            animal.DespesaAcumulada += (decimal)despesaMes;
+
+            despesaTotal += despesaMes;
+
+            if (despesaMes > despesaMajor)
+            {
+                despesaMajor = despesaMes;
+                animalMesCar = animal;
+            }
+            
+            Console.WriteLine("[DESPESA MES] " +
+                              "Animal: '"+animal.Nom+"', " +
+                              "prèvia: '"+previa+"$', " +
+                              "del mes: '"+despesaMes+"$', " +
+                              "actual: '"+animal.DespesaAcumulada+"$'");
+        }
+
+        _context.SaveChanges();
+        
+        Console.WriteLine("[DESPESA MES REFUGI] " +
+                          "Total: '"+despesaTotal+"$', " +
+                          "Animal més car: '"+animalMesCar.Nom+"', " +
+                          "Preu animal més car: '"+despesaMajor+"$'");
+    }
 }
