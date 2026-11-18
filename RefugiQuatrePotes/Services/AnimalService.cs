@@ -239,4 +239,28 @@ public class AnimalService
                           "Animal més car: '"+animalMesCar.Nom+"', " +
                           "Preu animal més car: '"+despesaMajor+"$'");
     }
+    
+    public void EstadistiquesPerEspecie()
+    {
+        var stats = _context.Animal
+            .GroupBy(a => a.Especie)
+            .Select(g => new
+            {
+                Especie = g.Key,
+                Total = g.Count(),
+                Adoptats = g.Count(ag => ag.EstaAdoptat),
+                Disponibles = g.Count(ag => !ag.EstaAdoptat),
+                PesMitja = g.Average(ag => ag.Pes).ToString("N1")
+            })
+            .OrderByDescending(o => o.Total);
+
+        foreach (var s in stats)
+        {
+            Console.WriteLine($"[{s.Especie}] " +
+                              $"Total: '{s.Total}', " +
+                              $"Adoptats: '{s.Adoptats}', " +
+                              $"Disponibles: '{s.Disponibles}', " +
+                              $"Pes Mitjà: '{s.PesMitja}'");
+        }
+    }
 }

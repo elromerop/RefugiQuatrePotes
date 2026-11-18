@@ -32,6 +32,7 @@ public class Animal
     public virtual ICollection<Voluntari> Voluntaris { get; set; }
     public virtual Animal? Mare { get; set; }
     public virtual ICollection<Animal> Cries { get; set; }
+    public virtual ICollection<Visita> Visites { get; set; }
 
     public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, DateTime dataEntrada, double pes, bool estaAdoptat, DateTime? dataAdopcio, decimal quotaAdopcio, decimal despesaAcumulada, Xip xip)
     {
@@ -48,6 +49,7 @@ public class Animal
         Xip = xip;
         Voluntaris = new HashSet<Voluntari>();
         Cries = new HashSet<Animal>();
+        Visites = new HashSet<Visita>();
     }
 
     public Animal(string nom, Especie especie, bool esFemella, DateTime dataNaixement, double pes)
@@ -65,12 +67,14 @@ public class Animal
         Xip = null;
         Voluntaris = new HashSet<Voluntari>();
         Cries = new HashSet<Animal>();
+        Visites = new HashSet<Visita>();
     }
 
     public Animal()
     {
         Voluntaris = new HashSet<Voluntari>();
         Cries = new HashSet<Animal>();
+        Visites = new HashSet<Visita>();
     }
 
     public override string ToString() =>

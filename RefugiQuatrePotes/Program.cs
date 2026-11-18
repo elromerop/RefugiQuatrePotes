@@ -46,6 +46,7 @@ db.Animal.AddRange(animals);
 db.SaveChanges();               // fins aquí no s'ha fet cap INSERT
 
 AnimalService animalService = new AnimalService(db);
+VisitaService visitaService = new VisitaService(db);
 
 Console.WriteLine("--- Tots els animals ---");
 foreach (Animal a in animalService.GetTots())
@@ -429,3 +430,28 @@ db.Adoptant.Add(new Adoptant("10293847A", "Lucas", "Romero Pérez", true));
 db.SaveChanges();
 adoptantService.Adoptar("10293847A", "724098100000012");
 animalService.CalcularDespesaMes();
+
+// ================================================================
+// ============ SESSIÓ 6 · VISITES ================================
+// ================================================================
+
+// ============ Nivell 1 · Base ============
+
+// ============ GenerarVisites ============
+Console.WriteLine("\n--- Generar visites ---");
+visitaService.GenerarVisites(30);
+Console.WriteLine("\n--- Estadistiques per espècie ---");
+animalService.EstadistiquesPerEspecie();
+Console.WriteLine("\n--- Estadistiques per motiu ---");
+visitaService.EstadistiquesPerMotiu();
+Console.WriteLine("\n--- Llistar voluntaris (min 2) ---");
+voluntariService.LlistatVoluntaris(2);
+Console.WriteLine("\n--- Llistar voluntaris (min 1) ---");
+voluntariService.LlistatVoluntaris(1);
+Console.WriteLine("\n--- Voluntaris de Seniors ---");
+foreach (var voluntari in voluntariService.VoluntarisDeSeniors())
+{
+    Console.WriteLine(voluntari);
+}
+Console.WriteLine("\n--- Estadistiques per mes ---");
+visitaService.EstadistiquesPerMes();

@@ -130,4 +130,39 @@ public class VoluntariService
         Console.WriteLine($"[PASSEIG] '{nomVoluntari}' ha tret a passejar a '{animal.Nom}' durant {minuts} minuts");
         return true;
     }
+    
+    public void LlistatVoluntaris(int minAnimals)
+    {
+        var stats = _context.Voluntari
+            .Where(v => v.Animals.Count >= minAnimals)
+            .Select(g => new
+            {
+                Nom = g.Nom,
+                Torn = g.Torn,
+                AnimalsCount = g.Animals.Count,
+                Minuts = g.MinutsPasseig
+            })
+            .OrderByDescending(v => v.AnimalsCount);
+
+        int i = 0;
+        foreach (var s in stats)
+        {
+            i++;
+            Console.WriteLine($"{i}. " +
+                              $"{s.Nom} ({s.Torn}) - " +
+                              $"animals: {s.AnimalsCount} - " +
+                              $"{s.Minuts} min");
+        }
+    }
+    
+    public List<Voluntari> VoluntarisDeSeniors()
+    {
+        int dataPerSenior = DateTime.Today.Year - 8;
+        
+        return _context.Voluntari
+            .Where(v => v.Animals
+                .Where(a => a.DataNaixement.Year <= dataPerSenior)
+                .Count() > 0)
+            .ToList();
+    }
 }
